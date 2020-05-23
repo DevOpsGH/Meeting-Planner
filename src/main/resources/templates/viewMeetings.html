@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+</head>
+<body>
+<p>
+    <a id="meetings-creator" class="btn btn-default" href="/addMeeting">Create meeting</a>
+</p>
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
+<!--/*--><!--@thymesVar id="state" type="java.lang.Integer"--><!--*/-->
+<div th:if="${param.message != null}" class="row"> <!-- if there is a message in model -->
+    <div class="col-sm-2 col-sm-offset-2">
+        <div class="alert text-center" th:classappend="${param.state[0]} == 1 ? 'alert-success' : 'alert-danger'" >
+            <span id="msg" th:text="${param.message[0]}"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                Meetings
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Duration</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Meeting Room's ID</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--/*@thymesVar id="meetings" type="java.util.List<com.sefir.app.Meeting>"*/-->
+                    <tr th:each="meeting : ${meetings}">
+                        <td th:text="${meeting.id}"></td>
+                        <td th:text="${meeting.name}"></td>
+                        <td th:text="${meeting.description}"></td>
+                        <td th:text="${meeting.duration}"></td>
+                        <td th:text="${meeting.date}"></td>
+                        <td th:text="${meeting.time}"></td>
+                        <td th:text="${meeting.meetingRoomID}"></td>
+                        <td>
+                            <p>
+                                <a class="btn btn-default deleter" th:href="@{/deleteMeeting/{id}(id=${meeting.id})}">Delete</a>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
